@@ -56,8 +56,9 @@ Now open up your application dashboard. To add a bot to the application, navigat
 <img title="a title" alt="Alt text" src="https://assets.digitalocean.com/articles/node_discord_bot/step1c.png">
 
 
-Click the Add Bot button to add a bot to the application. Click the Yes, do it! button when it prompts you for confirmation. You will then be on a dashboard containing details of your bot’s name, authentication token, and profile picture.
-<img title="a title" alt="Alt text" src="https://assets.digitalocean.com/articles/node_discord_bot/step1d.pn">
+Click the Add Bot button to add a bot to the application. Click the Yes, do it! button when it prompts you for confirmation. You will then be on a dashboard containing details of your bot’s name, authentication token, and profile picture. Dont forget to copy the token and paste it in the code where it says TOKEN HERE You can find a image of the code here! <img title="a title" alt="Alt text" src="https://media.discordapp.net/attachments/786342174638997514/786698810482491392/unknown.png">
+
+<img title="a title" alt="Alt text" src="https://assets.digitalocean.com/articles/node_discord_bot/step1d.png">
 
 You can modify your bot’s name or profile picture here on the dashboard. You also need to copy the bot’s authentication token by clicking Click to Reveal Token and copying the token that appears.
 
