@@ -6,6 +6,8 @@
 
 You will need node.js hich is installed at http://nodejs.org/ follow the steps on the installation guide. Open command prompt (cmd). Make a folder in desktop.
 
+On cmd type:
+
 ```markdown
 cd desktop
 then
@@ -21,6 +23,25 @@ Open your code editor, mine is Visual Studio Code.
 Open the folder for your bot in the editor, make a file and name it index.js.
 Then open command prompt (cmd).
 
-### Support or Contact
+```javascript
+const Discord = require('discord.js');
+const client = new Discord.Client();
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+client.on('ready', () => {
+  console.log(`Logged on as ${client.user.tag}!`);
+});
+
+client.on('message', msg => {
+  if (msg.content === '!ping') {
+    msg.reply('Pong!');
+  }
+});
+
+client.login('TOKEN HERE');
+```
+
+
+### More advanced commands!
+
+COMING SOON!
+
