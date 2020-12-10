@@ -4,7 +4,7 @@
 
 ### Installation!
 
-You will need node.js hich is installed at http://nodejs.org/ follow the steps on the installation guide. Go to cmd. make a folder in desktop.
+You will need node.js hich is installed at http://nodejs.org/ follow the steps on the installation guide. Open command prompt (cmd). Make a folder in desktop.
 
 ```markdown
 cd desktop
@@ -12,27 +12,14 @@ then
 cd folder name
 then
 npm install discord.js
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
+### Coding your bot.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/CodesWithJames/test-website/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Open your code editor, mine is Visual Studio Code.
+Open the folder for your bot in the editor, make a file and name it index.js.
+Then open command prompt (cmd).
 
 ### Support or Contact
 
