@@ -1,15 +1,17 @@
-## Welcome to GitHub Pages
+## Build a discord.js bot!
 
-You can use the [editor on GitHub](https://github.com/CodesWithJames/test-website/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Installation!
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+You will need node.js hich is installed at http://nodejs.org/ follow the steps on the installation guide. Go to cmd. make a folder in desktop.
 
 ```markdown
-Syntax highlighted code block
+cd desktop
+then
+cd folder name
+then
+npm install discord.js
 
 # Header 1
 ## Header 2
