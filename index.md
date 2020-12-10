@@ -4,7 +4,7 @@
 
 ### Installation!
 
-You will need node.js hich is installed at http://nodejs.org/ follow the steps on the installation guide. Open command prompt (cmd). Make a folder in desktop.
+You will need node.js which is installed at http://nodejs.org/ follow the steps on the installation guide. Open command prompt (cmd). Make a folder in desktop.
 
 On cmd type:
 
