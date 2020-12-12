@@ -99,7 +99,16 @@ client.on('message', msg => {
 ```
 
 
-### Command Handler
+### Command Handling
+
+Go to cmd and install.
+```javascript
+npm i fs
+then
+npm i discord.js
+then 
+npm i path
+```
 
 Create a file called index.js
 
