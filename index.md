@@ -107,72 +107,125 @@ Inside put:
 
 ```javascript
 
-const Discord = require("discord.js"),
-      client = new Discord.Client(),
-      fs = require("fs");
-//Command Handler
-client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
-client.events = new Discord.Collection();
+const { Client, Collection } = require("discord.js");
+const { readdirSync } = require("fs");
+const { join } = require("path");
+const { token, prefix } = require("./config.json");
 
-fs.readdir("./commands/", (err, files) => {
-    if (err) return console.log(err);
-    files.forEach(file => {
-        if (!file.endsWith(".js")) return;
-        let props = require(`./commands/${file}`);
-        console.log("Successfully loaded " + file)
-        let commandName = file.split(".")[0];
-        client.commands.set(commandName, props);
-    });
-});
-    //Events "handler"
-    fs.readdir('./events/', (err, files) => {
-        if (err) console.log(err);
-        files.forEach(file => {
-            let eventFunc = require(`./events/${file}`);
-            console.log("Successfully loaded " + file)
-            let eventName = file.split(".")[0];
-            client.on(eventName, (...args) => eventFunc.run(client, ...args));
-        });
-});
+const client = new Client({ disableMentions: "everyone" });
 
-client.on("ready", () => console.log("Online!"));
-client.login('Token Here!')
-```
+client.login(token);
+client.commands = new Collection();
+client.prefix = prefix;
+const cooldowns = new Collection();
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-Message Event
+client.on("ready", () => {
+  console.log(`logged in as ${client.user.tag}`);
+  client.user.setActivity("-help | Bouat", {
+    type: "STREAMING",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  });
 
-Create a file called message.js in a folder called events.
-Now we will use our message event code!
-
-```javascript
-const prefix = "Your desired prefix here!"  
-
- exports.run = async(client, message) => {
-  if (message.author.bot) return;
-  if (message.content.startsWith(prefix)) {
-    
- let messageArray = message.content.split(" "),
-     cmd = messageArray[0],
-     args = messageArray.slice(1),
-     commandfile = client.commands.get(cmd.slice(prefix.length)) || client.aliases.get(cmd.slice(prefix.length));
-  
-if(!commandfile) return;    
-    commandfile.run(client,message,args);             
+  const commandFiles = readdirSync(join(__dirname, "commands")).filter((file) =>
+    file.endsWith(".js")
+  );
+  for (const file of commandFiles) {
+    const command = require(join(__dirname, "commands", `${file}`));
+    client.commands.set(command.name, command);
   }
-  
 
+  client.on("message", async (message) => {
+    if (message.author.bot) return;
+    if (!message.guild) return;
+
+    const prefixRegex = new RegExp(
+      `^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`
+    );
+    if (!prefixRegex.test(message.content)) return;
+
+    const [, matchedprefix] = message.content.match(prefixRegex);
+
+    const args = message.content.slice(matchedprefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
+
+    const command =
+      client.commands.get(commandName) ||
+      client.commands.find(
+        (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+      );
+    
+    if (!command)  return;
+
+    if (!cooldowns.has(command.name)) {
+      cooldowns.set(command.name, new Collection());
+    }
+   
+
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 1) * 1000;
+
+    if (timestamps.has(message.author.id)) {
+      const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        return message.reply(
+          `you have to wait ${timeLeft.toFixed(1)} second before using \`${
+            command.name
+          }\``
+        );
+      }
+    }
+
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+    try {
+      command.execute(message, args);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
 
 ```
+```
 
+--------
+Config
+
+Create a file called config.json.
+In the file put:
+
+```json
+{
+    "token":"TOKEN-HERE",
+    "prefix":"PREFIX HERE"
+ }
+```
+```
+
+--------
 Example command
 
 ```javascript
-exports.run = (client, message, args) => {
-  message.channel.send("Pong :)");
-}
-exports.config = {
-  aliases: ["pong", "pingpong"]
-}
+module.exports = {
+    name: 'ping',
+    description: 'Ping!',
+    cooldown: 3,
+    aliases: ["test"],
+    execute(message, args) {
+        message.channel.send('Pong!');
+    },
+};
 
 ```
+
+--------
+
+
+ This is a advanced discord.js command handler, you can apply for developers at discord-docs.ml via mail!
+ 
+ jamesmesserking@gmail.com!
