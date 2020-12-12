@@ -97,3 +97,82 @@ client.on('message', msg => {
 });
 
 ```
+
+
+### Command Handler
+
+Create a file called index.js
+
+Inside put:
+
+```javascript
+
+const Discord = require("discord.js"),
+      client = new Discord.Client(),
+      fs = require("fs");
+//Command Handler
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+client.events = new Discord.Collection();
+
+fs.readdir("./commands/", (err, files) => {
+    if (err) return console.log(err);
+    files.forEach(file => {
+        if (!file.endsWith(".js")) return;
+        let props = require(`./commands/${file}`);
+        console.log("Successfully loaded " + file)
+        let commandName = file.split(".")[0];
+        client.commands.set(commandName, props);
+    });
+});
+    //Events "handler"
+    fs.readdir('./events/', (err, files) => {
+        if (err) console.log(err);
+        files.forEach(file => {
+            let eventFunc = require(`./events/${file}`);
+            console.log("Successfully loaded " + file)
+            let eventName = file.split(".")[0];
+            client.on(eventName, (...args) => eventFunc.run(client, ...args));
+        });
+});
+
+client.on("ready", () => console.log("Online!"));
+client.login('Token Here!')
+```
+
+Message Event
+
+Create a file called message.js in a folder called events.
+Now we will use our message event code!
+
+```javascript
+const prefix = "Your desired prefix here!"  
+
+ exports.run = async(client, message) => {
+  if (message.author.bot) return;
+  if (message.content.startsWith(prefix)) {
+    
+ let messageArray = message.content.split(" "),
+     cmd = messageArray[0],
+     args = messageArray.slice(1),
+     commandfile = client.commands.get(cmd.slice(prefix.length)) || client.aliases.get(cmd.slice(prefix.length));
+  
+if(!commandfile) return;    
+    commandfile.run(client,message,args);             
+  }
+  
+
+
+```
+
+Example command
+
+```javascript
+exports.run = (client, message, args) => {
+  message.channel.send("Pong :)");
+}
+exports.config = {
+  aliases: ["pong", "pingpong"]
+}
+
+```
