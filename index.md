@@ -191,9 +191,8 @@ client.on("ready", () => {
 });
 
 ```
-```
-
 --------
+
 Config
 
 Create a file called config.json.
@@ -205,9 +204,11 @@ In the file put:
     "prefix":"PREFIX HERE"
  }
 ```
-```
+
 
 --------
+
+
 Example command
 
 ```javascript
@@ -226,6 +227,6 @@ module.exports = {
 --------
 
 
- This is a advanced discord.js command handler, you can apply for developers at discord-docs.ml via mail!
+ This is a advanced discord.js command handler, you can apply for developers or suggest a topic at discord-docs.ml via mail!
  
  jamesmesserking@gmail.com!
