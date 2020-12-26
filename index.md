@@ -13,6 +13,8 @@ cd desktop
 then
 cd folder name
 then
+npm init -y
+then
 npm install discord.js
 ```
 
